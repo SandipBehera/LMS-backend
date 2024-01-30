@@ -11,6 +11,18 @@ export const EmployeeMenu = [
         badge: "badge badge-light-primary",
         active: false,
       },
+      {
+        title: "Add Books",
+        icon: "widget",
+        type: "sub",
+        active: false,
+        children: [
+          { path: `/add-books`, title: "Add Category", type: "link" },
+          { path: `/book-location`, title: "Add Location", type: "link" },
+
+          
+        ],
+      },
     ],
   },
 ];
