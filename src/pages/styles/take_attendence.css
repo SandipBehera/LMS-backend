@@ -1,0 +1,12 @@
+.zoomable-image {
+    max-width: 100%;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .zoomable-image.zoomed-in {
+    transform: scale(1.1); /* Adjust the scale factor as needed for zoom-in effect */
+  }
+  
+  .zoomable-image.zoomed-out {
+    transform: scale(1); /* Normal scale for zoom-out effect */
+  }

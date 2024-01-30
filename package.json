@@ -1,0 +1,259 @@
+{
+  "name": "libray-management-system",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "",
+  "proxy": "http://13.58.217.203:3001",
+  "dependencies": {
+    "@auth0/auth0-react": "^2.0.1",
+    "@babel/core": "^7.16.0",
+    "@fortawesome/fontawesome-svg-core": "6.5.1",
+    "@fortawesome/free-solid-svg-icons": "6.5.1",
+    "@fortawesome/react-fontawesome": "0.2.0",
+    "@fullcalendar/core": "^6.1.4",
+    "@fullcalendar/daygrid": "^6.1.4",
+    "@fullcalendar/interaction": "^6.1.4",
+    "@fullcalendar/react": "^6.1.4",
+    "@fullcalendar/timegrid": "^6.1.4",
+    "@mobiscroll/react-lite": "^4.10.9",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+    "@react-google-maps/api": "^2.18.1",
+    "@react-pdf/renderer": "^3.1.14",
+    "@reactour/tour": "^3.4.0",
+    "@svgr/webpack": "^5.5.0",
+    "apexcharts": "^3.39.0",
+    "axios": "^1.3.6",
+    "babel-jest": "^27.4.2",
+    "babel-loader": "^8.2.3",
+    "babel-plugin-named-asset-import": "^0.3.8",
+    "babel-preset-react-app": "^10.0.1",
+    "bfj": "^7.0.2",
+    "body-scroll-lock": "^3.1.5",
+    "bootstrap-scss": "^5.2.3",
+    "browserslist": "^4.18.1",
+    "camelcase": "^6.2.1",
+    "case-sensitive-paths-webpack-plugin": "^2.4.0",
+    "chart.js": "^4.2.1",
+    "chartjs-plugin-datalabels": "^2.2.0",
+    "concurrently": "^8.0.1",
+    "css-loader": "^6.5.1",
+    "css-minimizer-webpack-plugin": "^3.2.0",
+    "date-fns": "^2.29.3",
+    "deni-react-treeview": "^1.1.11",
+    "dotenv": "^10.0.0",
+    "dotenv-expand": "^5.1.0",
+    "easymde": "^2.18.0",
+    "emoji-mart": "^5.5.2",
+    "eslint": "^8.3.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-webpack-plugin": "^3.1.1",
+    "feather-icons": "^4.29.0",
+    "file-loader": "^6.2.0",
+    "fs-extra": "^10.0.0",
+    "html-webpack-plugin": "^5.5.0",
+    "i18next-browser-languagedetector": "^7.0.1",
+    "i18next-http-backend": "^2.2.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^27.4.3",
+    "jest-resolve": "^27.4.2",
+    "jest-watch-typeahead": "^1.0.0",
+    "json-server": "^0.17.3",
+    "knob": "^1.1.0",
+    "leaflet": "^1.9.3",
+    "mini-css-extract-plugin": "^2.4.5",
+    "node-sass": "^8.0.0",
+    "papaparse": "^5.4.1",
+    "pigeon-maps": "^0.21.3",
+    "postcss": "^8.4.4",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-loader": "^6.2.1",
+    "postcss-normalize": "^10.0.1",
+    "postcss-preset-env": "^7.0.1",
+    "prompts": "^2.4.2",
+    "react-18-image-lightbox": "^5.1.4",
+    "react-ace": "^10.1.0",
+    "react-apexcharts": "^1.4.0",
+    "react-app-polyfill": "^3.0.0",
+    "react-big-calendar": "^1.6.9",
+    "react-bootstrap": "^2.7.4",
+    "react-bootstrap-typeahead": "^6.1.2",
+    "react-chartjs-2": "^5.2.0",
+    "react-ckeditor-component": "^1.1.0",
+    "react-clock": "^4.2.0",
+    "react-copy-to-clipboard": "^5.1.0",
+    "react-countdown": "^2.3.5",
+    "react-countup": "^6.4.2",
+    "react-custom-scrollbars-2": "^4.5.0",
+    "react-data-table-component": "^7.5.3",
+    "react-datepicker": "^4.11.0",
+    "react-day-picker": "^8.7.1",
+    "react-dev-utils": "^12.0.1",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dragula": "^1.1.17",
+    "react-dropzone-uploader": "^2.11.0",
+    "react-equal-height": "^1.2.2",
+    "react-feather": "^2.0.10",
+    "react-files": "^3.0.0",
+    "react-google-charts": "^4.0.0",
+    "react-gradient-timepicker": "^0.0.3",
+    "react-hook-form": "^7.43.9",
+    "react-i18next": "^12.2.0",
+    "react-icons": "^4.8.0",
+    "react-image-crop": "^10.0.9",
+    "react-leaflet": "^4.2.1",
+    "react-masonry-css": "^1.0.16",
+    "react-papaparse": "^4.4.0",
+    "react-perfect-scrollbar": "^1.5.8",
+    "react-range": "^1.8.14",
+    "react-rating": "^2.0.5",
+    "react-ratings-declarative": "^3.4.1",
+    "react-redux": "^8.0.5",
+    "react-refresh": "^0.11.0",
+    "react-router": "^6.10.0",
+    "react-router-dom": "^6.10.0",
+    "react-select": "^5.7.2",
+    "react-simplemde-editor": "^5.2.0",
+    "react-slick": "^0.29.0",
+    "react-sparklines": "^1.7.0",
+    "react-to-print": "^2.14.12",
+    "react-toastify": "^9.1.2",
+    "react-transition-group": "^4.4.5",
+    "react-use-file-upload": "^0.9.5",
+    "react-uuid": "^2.0.0",
+    "react-vertical-timeline-component": "^3.6.0",
+    "react-webcam": "^7.2.0",
+    "reactour": "^1.19.0",
+    "reactstrap": "^9.1.9",
+    "redux": "^4.2.1",
+    "redux-saga": "^1.2.3",
+    "resolve": "^1.20.0",
+    "resolve-url-loader": "^4.0.0",
+    "sass": "^1.62.0",
+    "sass-loader": "^12.3.0",
+    "semver": "^7.3.5",
+    "slick-carousel": "^1.8.1",
+    "socket.io-client": "^4.7.2",
+    "source-map-loader": "^3.0.0",
+    "style-loader": "^3.3.1",
+    "styled-components": "^5.3.10",
+    "sweetalert2": "^11.7.3",
+    "tailwindcss": "^3.0.2",
+    "terser-webpack-plugin": "^5.2.5",
+    "web-vitals": "^3.3.1",
+    "webpack": "^5.64.4",
+    "webpack-dev-server": "^4.6.0",
+    "webpack-manifest-plugin": "^4.0.2",
+    "workbox-webpack-plugin": "^6.4.1",
+    "world-map-geojson": "^1.0.2"
+  },
+  "scripts": {
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js",
+    "lint": "eslint --fix --ext .js,.jsx .",
+    "json-serve": "node public/server.js",
+    "start-developer": "concurrently \"node scripts/start.js\" \"node public/server.js\""
+  },
+  "resolutions": {
+    "react-dev-utils": "10.0.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app",
+    "plugins": [
+      "jsx-a11y"
+    ],
+    "rules": {
+      "no-whitespace-before-property": "off",
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "off"
+    },
+    "overrides": [
+      {
+        "files": [
+          "*-index.js"
+        ],
+        "rules": {
+          "no-unused-expressions": "off"
+        }
+      }
+    ],
+    "reportUnusedDisableDirectives": true,
+    "noInlineConfig": false
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "moment": "^2.29.4",
+    "moment-timezone": "^0.5.43",
+    "parcel": "^2.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!src/**/*.d.ts"
+    ],
+    "setupFiles": [
+      "react-app-polyfill/jsdom"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTests.js"
+    ],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+    ],
+    "testEnvironment": "jsdom",
+    "transform": {
+      "^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
+      "^.+\\.module\\.(css|sass|scss)$"
+    ],
+    "modulePaths": [],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
+    },
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "watchPlugins": [
+      "jest-watch-typeahead/filename",
+      "jest-watch-typeahead/testname"
+    ],
+    "resetMocks": true
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  }
+}
