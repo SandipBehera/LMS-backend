@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 import { useForm, Controller } from "react-hook-form";
 import { Breadcrumbs } from "../../../AbstractElements";
+import { faFileImport } from "@fortawesome/free-solid-svg-icons";
 
 export default function BookLocation() {
   const {
@@ -94,7 +95,7 @@ export default function BookLocation() {
                     }}
                     render={({ field }) => (
                       <>
-                        <input {...field} className="form-control" />
+                        <input {...field} className="form-control" maxLength={10} />
                       </>
                     )}
                   />
@@ -130,7 +131,7 @@ export default function BookLocation() {
                     }}
                     render={({ field }) => (
                       <>
-                        <input {...field} className="form-control" />
+                        <input {...field} className="form-control" maxLength={10} />
                       </>
                     )}
                   />
@@ -163,7 +164,7 @@ export default function BookLocation() {
                     }}
                     render={({ field }) => (
                       <>
-                        <input {...field} className="form-control" />
+                        <input {...field} className="form-control" maxLength={10} />
                       </>
                     )}
                   />

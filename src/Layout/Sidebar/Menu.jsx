@@ -12,13 +12,38 @@ export const EmployeeMenu = [
         active: false,
       },
       {
-        title: "Add Books",
+        title: "Book Category",
         icon: "widget",
         type: "sub",
         active: false,
         children: [
-          { path: `/add-books`, title: "Add Category", type: "link" },
-          { path: `/book-location`, title: "Add Location", type: "link" },
+          { path: `/add-category`, title: "Add Category", type: "link" },
+          { path: `/all-category`, title: "All Category", type: "link" },
+
+          
+        ],
+      },
+      {
+        title: "Book Location",
+        icon: "widget",
+        type: "sub",
+        active: false,
+        children: [
+          { path: `/add-book-location`, title: "Add Book Location", type: "link" },
+          { path: `/all-book-location`, title: "All Book Location", type: "link" },
+
+          
+        ],
+      },
+      {
+        title: "Add Book",
+        icon: "widget",
+        type: "sub",
+        active: false,
+        children: [
+          { path: `/add-book`, title: "Add Book", type: "link" },
+          { path: `/view-books`, title: "All Book", type: "link" },
+
 
           
         ],
