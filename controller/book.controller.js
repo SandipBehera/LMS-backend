@@ -1,10 +1,9 @@
-const e = require("express");
 const connectDatabase = require("../config/dbConfig");
 const logger = require("../logger");
 
 exports.CreateBookCategory = async (req, res) => {
-  const { category_name, category_description, status } = req.body;
-  const query = `INSERT INTO lms_book_category (category_name,category_description,status) VALUES (?,?,?)`;
+  const { category_name, category_description, status, branch_id } = req.body;
+  const query = `INSERT INTO lms_book_category (category_name,category_description,status,branch_id) VALUES (?,?,?,?)`;
   const duplicateCheckQuery = `SELECT * FROM lms_book_category WHERE category_name = ?`;
   const connection = await connectDatabase();
 
@@ -51,11 +50,12 @@ exports.CreateBookCategory = async (req, res) => {
 };
 
 exports.GetAllBookCategories = async (req, res) => {
-  const query = `SELECT * FROM lms_book_category`;
+  const { branch_id } = req.params;
+  const query = `SELECT * FROM lms_book_category where branch_id = ?`;
   const connection = await connectDatabase();
 
   try {
-    connection.query(query, (error, rows) => {
+    connection.query(query, [branch_id], (error, rows) => {
       if (error) {
         res.status(500).json({ message: "Internal server error" });
         logger.error("Error fetching book categories: ", error);
@@ -119,12 +119,12 @@ exports.UploadBulkCategory = async (req, res) => {
 
   try {
     const query =
-      "INSERT INTO lms_book_category (category_name, category_description, status) VALUES (?, ?, ?)";
+      "INSERT INTO lms_book_category (category_name, category_description, status, brach_id) VALUES (?, ?, ?, ?)";
     const values = [];
 
     for (const row of rows) {
-      const [category_name, category_description, status] = row;
-      values.push([category_name, category_description, status]);
+      const [category_name, category_description, status, branch_id] = row;
+      values.push([category_name, category_description, status, branch_id]);
     }
 
     await connection.query(query, values);
