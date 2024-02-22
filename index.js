@@ -17,14 +17,7 @@ const server = Http.createServer(app);
 // app.use(cors({ origin: "*" }));
 const corsOptions = {
   // origin: ["http://localhost:3000", "http://localhost"],
-  origin: [
-    "http://localhost:3000",
-    "http://localhost",
-    "http://localhost:3001",
-    "http://localhost:3002",
-    "http://13.58.217.203:3000",
-    "http://110.226.145.139:3000",
-  ],
+  origin: "*",
   credentials: true,
 };
 
