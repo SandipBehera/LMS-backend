@@ -2,6 +2,8 @@ import React, { Fragment, useState } from "react";
 import { Button, Card, CardBody, FormGroup, Row, Col, Label } from "reactstrap";
 import { useForm, Controller } from "react-hook-form";
 import { Breadcrumbs } from "../../../AbstractElements";
+import { Add_Book_Category } from "../../../api_handler/bookcategory";
+import { toast } from "react-toastify";
 
 export default function AddBookCategory() {
   const {
@@ -12,17 +14,31 @@ export default function AddBookCategory() {
   } = useForm();
 
   const [resetFlag, setResetFlag] = useState(false);
+  const userTypes = localStorage.getItem("userType");
+  const userId = localStorage.getItem("userId");
 
   const onSubmit = (data) => {
-    console.log(data);
+    Add_Book_Category(
+      data.category_name,
+      data.category_description,
+      data.status
+    ).then((res) => {
+      console.log("first", res);
+      if (res.status === "success") {
+        toast.success(res.message);
+        window.location.replace(`/lms/${userTypes}/${userId}/all-category`);
+      } else if (res.status === "error") {
+        toast.error(res.message);
+      }
+    });
   };
 
   const handleCancel = () => {
     setResetFlag(true);
     setTimeout(() => {
       setResetFlag(false);
-      setValue("bookName", "");
-      setValue("description", "");
+      setValue("category_name", "");
+      setValue("category_description", "");
       setValue("status", "");
     }, 0);
   };
@@ -48,7 +64,7 @@ export default function AddBookCategory() {
                     Book Category
                   </Label>
                   <Controller
-                    name="bookName"
+                    name="category_name"
                     control={control}
                     rules={{
                       required: true,
@@ -61,15 +77,15 @@ export default function AddBookCategory() {
                       </>
                     )}
                   />
-                  {errors.bookName?.type === "required" && (
+                  {errors.category_name?.type === "required" && (
                     <p className="text-danger">Category name is required</p>
                   )}
-                  {errors.bookName?.type === "maxLength" && (
+                  {errors.category_name?.type === "maxLength" && (
                     <p className="text-danger">
                       Book name cannot exceed 20 characters
                     </p>
                   )}
-                  {errors.bookName?.type === "pattern" && (
+                  {errors.category_name?.type === "pattern" && (
                     <p className="text-danger">Alphabetical characters only</p>
                   )}
                 </Col>
@@ -84,7 +100,7 @@ export default function AddBookCategory() {
                     Description
                   </Label>
                   <Controller
-                    name="description"
+                    name="category_description"
                     control={control}
                     rules={{
                       required: true,
@@ -96,10 +112,10 @@ export default function AddBookCategory() {
                       </>
                     )}
                   />
-                  {errors.description?.type === "required" && (
+                  {errors.category_description?.type === "required" && (
                     <p className="text-danger">Description is required</p>
                   )}
-                  {errors.description?.type === "minLength" && (
+                  {errors.category_description?.type === "minLength" && (
                     <p className="text-danger">
                       Description should be minimum 100 characters
                     </p>
@@ -141,8 +157,7 @@ export default function AddBookCategory() {
               className="mt-2 ml-3 btn-success mr-2"
             >
               Save
-            </Button>
-            {" "}
+            </Button>{" "}
             <Button
               type="button"
               color="danger"
