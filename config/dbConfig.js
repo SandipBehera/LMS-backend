@@ -1,15 +1,15 @@
 const sql = require("mysql2");
 
-const dbConfig = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-};
-
-async function connectDatabase() {
+async function connectDatabase(db_config) {
+  const dyno_db = {
+    user: db_config.DB_USER || process.env.DB_USER,
+    host: db_config.DB_HOST || process.env.DB_HOST,
+    database: db_config.DB_NAME || process.env.DB_NAME,
+    password: db_config.DB_PASSWORD || process.env.DB_PASSWORD,
+  };
+  console.log("db_config", dyno_db);
   try {
-    const connection = await sql.createConnection(dbConfig);
+    const connection = await sql.createConnection(dyno_db);
     console.log("Database connected!");
     connection.on("error", (error) => {
       console.error("Database error: ", error);

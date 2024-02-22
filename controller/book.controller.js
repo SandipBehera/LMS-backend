@@ -5,7 +5,8 @@ exports.CreateBookCategory = async (req, res) => {
   const { category_name, category_description, status, branch_id } = req.body;
   const query = `INSERT INTO lms_book_category (category_name,category_description,status,branch_id) VALUES (?,?,?,?)`;
   const duplicateCheckQuery = `SELECT * FROM lms_book_category WHERE category_name = ?`;
-  const connection = await connectDatabase();
+  const Auth = req.session.Auth;
+  const connection = await connectDatabase(Auth);
 
   try {
     const duplicateCheckResult = await new Promise((resolve, reject) => {
@@ -52,7 +53,9 @@ exports.CreateBookCategory = async (req, res) => {
 exports.GetAllBookCategories = async (req, res) => {
   const { branch_id } = req.params;
   const query = `SELECT * FROM lms_book_category where branch_id = ?`;
-  const connection = await connectDatabase();
+  const Auth = req.session.Auth;
+  console.log("Auth", Auth);
+  const connection = await connectDatabase(Auth);
 
   try {
     connection.query(query, [branch_id], (error, rows) => {
@@ -74,7 +77,8 @@ exports.GetAllBookCategories = async (req, res) => {
 exports.GetBookCategory = async (req, res) => {
   const { id } = req.params;
   const query = `SELECT * FROM lms_book_category WHERE id = ?`;
-  const connection = await connectDatabase();
+  const Auth = req.session.Auth;
+  const connection = await connectDatabase(Auth);
 
   try {
     connection.query(query, [id], (error, rows) => {
@@ -96,7 +100,8 @@ exports.UpdateBookCategory = async (req, res) => {
   const { id } = req.params;
   const { category_name, category_description, status } = req.body;
   const query = `UPDATE lms_book_category SET category_name = ?, category_description = ?, status = ? WHERE id = ?`;
-  const connection = await connectDatabase();
+  const Auth = req.session.Auth;
+  const connection = await connectDatabase(Auth);
 
   try {
     connection.query(query, [category_name, category_description, status, id]);
@@ -115,7 +120,8 @@ exports.UploadBulkCategory = async (req, res) => {
   const fileBuffer = req.file.buffer.toString(); // Assuming the file is CSV
   const rows = fileBuffer.split("\n").map((row) => row.split(","));
 
-  const connection = await connectDatabase();
+  const Auth = req.session.Auth;
+  const connection = await connectDatabase(Auth);
 
   try {
     const query =
