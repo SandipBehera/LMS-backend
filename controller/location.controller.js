@@ -3,7 +3,7 @@ const logger = require("../logger");
 
 exports.GetLocations = async (req, res) => {
   const { branch_id } = req.params;
-  const query = `SELECT * FROM block WHERE branch_id = ? AND status = 'active'`;
+  const query = `SELECT * FROM block WHERE campus_id = ? AND block_status = 'active'`;
   const Auth = req.session.Auth;
   const connection = await connectDatabase(Auth);
   connection.query(query, [branch_id], (error, rows) => {
@@ -12,6 +12,7 @@ exports.GetLocations = async (req, res) => {
         .status(500)
         .json({ message: "Internal server error", status: "error" });
       logger.error("Error fetching book categories: ", error);
+      return;
     }
     res.status(200).json({ status: "success", categories: rows });
   });
