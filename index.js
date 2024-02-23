@@ -30,7 +30,7 @@ app.use(
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
     secure: false, // Set to true if using HTTPS
     httpOnly: false,
-    sameSite: "none", //lax,sameSite: "none", secure: true
+    sameSite: "lax", //lax,sameSite: "none", secure: true
     // Add other cookie options as needed
   })
 );
