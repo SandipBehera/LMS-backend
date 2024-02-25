@@ -84,7 +84,7 @@ exports.GetBookLocation = async (req, res) => {
         .json({ message: "Internal server error", status: "error" });
       logger.error("Error fetching location: ", error);
     }
-    res.status(200).json({ status: "success", location: rows[0] });
+    res.status(200).json({ status: "success", location: rows });
   });
 };
 
