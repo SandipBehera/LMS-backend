@@ -1,3 +1,4 @@
+// Initilize express router
 const connectDatabase = require("../config/dbConfig");
 const logger = require("../logger");
 
@@ -138,6 +139,194 @@ exports.UploadBulkCategory = async (req, res) => {
     res.status(200).json({ message: "Bulk upload successful" });
   } catch (error) {
     console.error("Error during bulk upload:", error);
+    res.status(500).json({ message: "Internal server error" });
+  } finally {
+    connection.end();
+  }
+};
+
+exports.AddBook = async (req, res) => {
+  const {
+    book_name,
+    book_location,
+    book_category,
+    book_author,
+    book_publisher,
+    book_vendor,
+    book_isbn_code,
+    published_year,
+    program,
+    department,
+    program_year,
+    book_volume,
+    pages,
+    subject,
+    language,
+    book_edition,
+    book_material_type,
+    book_sub_material_type,
+    book_class_no,
+    book_year_of_publication,
+    book_page_no,
+    book_place_publication,
+    book_accession_register,
+    date_of_entry,
+    financial_year,
+    branch_id,
+  } = req.body;
+  const duplicateCheckQuery = `SELECT * FROM lms_book WHERE book_name = ?`;
+  const query = `INSERT INTO lms_book (book_name,book_location,book_category,book_author,book_publisher,book_vendor,book_isbn_code,published_year,program,department,program_year,book_volume,pages,subject,language,book_edition,book_material_type,book_sub_material_type,book_class_no,book_year_of_publication,book_page_no,book_place_publication,book_accession_register,date_of_entry,financial_year,branch_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+  const Auth = req.session.Auth;
+  const connection = await connectDatabase(Auth);
+  connection.query(duplicateCheckQuery, [book_name], (error, rows) => {
+    if (error) {
+      res.status(500).json({ message: "Internal server error" });
+      logger.error("Error fetching book categories: ", error);
+      return;
+    }
+    if (rows.length > 0) {
+      res.status(200).json({ message: "Book already exists" });
+      return;
+    }
+    connection.query(
+      query,
+      [
+        book_name,
+        book_location,
+        book_category,
+        book_author,
+        book_publisher,
+        book_vendor,
+        book_isbn_code,
+        published_year,
+        program,
+        department,
+        program_year,
+        book_volume,
+        pages,
+        subject,
+        language,
+        book_edition,
+        book_material_type,
+        book_sub_material_type,
+        book_class_no,
+        book_year_of_publication,
+        book_page_no,
+        book_place_publication,
+        book_accession_register,
+        date_of_entry,
+        financial_year,
+        branch_id,
+      ],
+      (error, rows) => {
+        if (error) {
+          res.status(500).json({ message: "Internal server error" });
+          logger.error("Error fetching book categories: ", error);
+          return;
+        }
+        res.status(200).json({ message: "Book added successfully" });
+      }
+    );
+  });
+};
+
+exports.GetBooks = async (req, res) => {
+  const { branch_id } = req.params;
+  const query = `SELECT * FROM lms_book where branch_id = ?`;
+  const Auth = req.session.Auth;
+  const connection = await connectDatabase(Auth);
+
+  try {
+    connection.query(query, [branch_id], (error, rows) => {
+      if (error) {
+        res.status(500).json({ message: "Internal server error" });
+        logger.error("Error fetching book categories: ", error);
+        return;
+      }
+      res.status(200).json({ books: rows });
+    });
+  } catch (error) {
+    logger.error("Error fetching book categories: ", error);
+    res.status(500).json({ message: "Internal server error" });
+  } finally {
+    connection.end();
+  }
+};
+
+exports.UpdateBooks = async (req, res) => {
+  const {
+    book_name,
+    book_location,
+    book_category,
+    book_author,
+    book_publisher,
+    book_vendor,
+    book_isbn_code,
+    published_year,
+    program,
+    department,
+    program_year,
+    book_volume,
+    pages,
+    subject,
+    language,
+    book_edition,
+    book_material_type,
+    book_sub_material_type,
+    book_class_no,
+    book_year_of_publication,
+    book_page_no,
+    book_place_publication,
+    book_accession_register,
+    date_of_entry,
+    financial_year,
+    branch_id,
+  } = req.body;
+  const query = `UPDATE lms_book SET book_location = ?, book_category = ?, book_author = ?, book_publisher = ?, book_vendor = ?, book_isbn_code = ?, published_year = ?, program = ?, department = ?, program_year = ?, book_volume = ?, pages = ?, subject = ?, language = ?, book_edition = ?, book_material_type = ?, book_sub_material_type = ?, book_class_no = ?, book_year_of_publication = ?, book_page_no = ?, book_place_publication = ?, book_accession_register = ?, date_of_entry = ?, financial_year = ?, branch_id = ? WHERE book_name = ?`;
+  const Auth = req.session.Auth;
+  const connection = await connectDatabase(Auth);
+
+  try {
+    connection.query(
+      query,
+      [
+        book_location,
+        book_category,
+        book_author,
+        book_publisher,
+        book_vendor,
+        book_isbn_code,
+        published_year,
+        program,
+        department,
+        program_year,
+        book_volume,
+        pages,
+        subject,
+        language,
+        book_edition,
+        book_material_type,
+        book_sub_material_type,
+        book_class_no,
+        book_year_of_publication,
+        book_page_no,
+        book_place_publication,
+        book_accession_register,
+        date_of_entry,
+        financial_year,
+        branch_id,
+        book_name,
+      ],
+      (error, rows) => {
+        if (error) {
+          res.status(500).json({ message: "Internal server error" });
+          logger.error("Error fetching book categories: ", error);
+          return;
+        }
+        res.status(200).json({ message: "Book updated successfully" });
+      }
+    );
+  } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   } finally {
     connection.end();

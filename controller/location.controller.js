@@ -89,7 +89,8 @@ exports.GetBookLocation = async (req, res) => {
 };
 
 exports.UpdateLocation = async (req, res) => {
-  const { id, block, shelf_name, rack_name, sub_rack_name, status } = req.body;
+  const { block, shelf_name, rack_name, sub_rack_name, status } = req.body;
+  const { id } = req.params;
   const query = `UPDATE lms_book_location SET block=?,shelf_name=?,rack_name=?,sub_rack_name=?,status=? WHERE id=?`;
   const Auth = req.session.Auth;
   const connection = await connectDatabase(Auth);
