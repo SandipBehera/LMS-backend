@@ -291,6 +291,7 @@ exports.UpdateBooks = async (req, res) => {
     connection.query(
       query,
       [
+        book_name,
         book_location,
         book_category,
         book_author,
