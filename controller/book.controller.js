@@ -282,7 +282,8 @@ exports.UpdateBooks = async (req, res) => {
     financial_year,
     branch_id,
   } = req.body;
-  const query = `UPDATE lms_book SET book_location = ?, book_category = ?, book_author = ?, book_publisher = ?, book_vendor = ?, book_isbn_code = ?, published_year = ?, program = ?, department = ?, program_year = ?, book_volume = ?, pages = ?, subject = ?, language = ?, book_edition = ?, book_material_type = ?, book_sub_material_type = ?, book_class_no = ?, book_year_of_publication = ?, book_page_no = ?, book_place_publication = ?, book_accession_register = ?, date_of_entry = ?, financial_year = ?, branch_id = ? WHERE book_name = ?`;
+  const { id } = req.params;
+  const query = `UPDATE lms_book SET book_location = ?, book_category = ?, book_author = ?, book_publisher = ?, book_vendor = ?, book_isbn_code = ?, published_year = ?, program = ?, department = ?, program_year = ?, book_volume = ?, pages = ?, subject = ?, language = ?, book_edition = ?, book_material_type = ?, book_sub_material_type = ?, book_class_no = ?, book_year_of_publication = ?, book_page_no = ?, book_place_publication = ?, book_accession_register = ?, date_of_entry = ?, financial_year = ?, branch_id = ? WHERE id = ?`;
   const Auth = req.session.Auth;
   const connection = await connectDatabase(Auth);
 
@@ -315,7 +316,7 @@ exports.UpdateBooks = async (req, res) => {
         date_of_entry,
         financial_year,
         branch_id,
-        book_name,
+        id,
       ],
       (error, rows) => {
         if (error) {

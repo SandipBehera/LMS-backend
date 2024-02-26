@@ -21,4 +21,8 @@ router.get("/get-all-locations/:branch_id", locationController.GetBookLocation);
 router.get("/get-blocks/:branch_id", locationController.GetLocations);
 router.put("/update-book-location/:id", locationController.UpdateLocation);
 
+router.post("/create-book", BookController.AddBook);
+router.get("/get-all-books/:branch_id", BookController.GetBooks);
+router.put("/update-book/:id", BookController.UpdateBooks);
+
 module.exports = router;
