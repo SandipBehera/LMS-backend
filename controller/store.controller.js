@@ -65,13 +65,11 @@ exports.BookQuantity = async (req, res) => {
     });
   } catch (err) {
     logger.error(`Error in inserting book quantity: ${err.message}`);
-    res
-      .status(500)
-      .json({
-        message: "Internal Server Error",
-        error: err.message,
-        status: "error",
-      });
+    res.status(500).json({
+      message: "Internal Server Error",
+      error: err.message,
+      status: "error",
+    });
   } finally {
     connection.end();
   }
@@ -87,7 +85,11 @@ exports.GetItemCode = async (req, res) => {
         logger.error(`Error in getting item code: ${err}`);
         return res.status(500).json({ message: "Internal Server Error" });
       }
-      return res.status(200).json({ itemCode: result, duplicate: "true" });
+      if (result.length === 0) {
+        return res.status(200).json({ itemCode: "", duplicate: "false" });
+      } else {
+        return res.status(200).json({ itemCode: result, duplicate: "true" });
+      }
     });
   } catch (err) {
     logger.error(`Error in getting item code: ${err}`);
