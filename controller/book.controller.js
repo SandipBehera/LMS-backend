@@ -1,4 +1,5 @@
 // Initilize express router
+const { tr } = require("date-fns/locale");
 const connectDatabase = require("../config/dbConfig");
 const logger = require("../logger");
 
@@ -406,18 +407,25 @@ exports.GetPrograms = async (req, res) => {
   const query = `SELECT course_id,course_type FROM course where branch_id = ? AND course_status = 'Active'`;
   const Auth = req.session.Auth;
   const connection = await connectDatabase(Auth);
-  connection.query(query, [branch_id], (error, rows) => {
-    if (error) {
-      console.log("first", error);
-      logger.error("Error fetching course_types: ", error);
-      res
-        .status(500)
-        .json({ message: "Internal server error", status: "error" });
+  try {
+    connection.query(query, [branch_id], (error, rows) => {
+      if (error) {
+        console.log("first", error);
+        logger.error("Error fetching course_types: ", error);
+        res
+          .status(500)
+          .json({ message: "Internal server error", status: "error" });
 
-      return;
-    }
-    res.status(200).json({ programs: rows });
-  });
+        return;
+      }
+      res.status(200).json({ programs: rows });
+    });
+  } catch (error) {
+    logger.error("Error fetching course_types: ", error);
+    res.status(500).json({ message: "Internal server error" });
+  } finally {
+    connection.end();
+  }
 };
 
 exports.GetVendor = async (req, res) => {
@@ -425,16 +433,23 @@ exports.GetVendor = async (req, res) => {
   const query = `SELECT vendor_name FROM vendors where branch_id = ? AND status = 'Active'`;
   const Auth = req.session.Auth;
   const connection = await connectDatabase(Auth);
-  connection.query(query, [branch_id], (error, rows) => {
-    if (error) {
-      res
-        .status(500)
-        .json({ message: "Internal server error", status: "error" });
-      logger.error("Error fetching vendor_name: ", error);
-      return;
-    }
-    res.status(200).json({ vendors: rows });
-  });
+  try {
+    connection.query(query, [branch_id], (error, rows) => {
+      if (error) {
+        res
+          .status(500)
+          .json({ message: "Internal server error", status: "error" });
+        logger.error("Error fetching vendor_name: ", error);
+        return;
+      }
+      res.status(200).json({ vendors: rows });
+    });
+  } catch (error) {
+    logger.error("Error fetching vendor_name: ", error);
+    res.status(500).json({ message: "Internal server error" });
+  } finally {
+    connection.end();
+  }
 };
 exports.GetProgramYear = async (req, res) => {
   const { branch_id } = req.params;
@@ -444,33 +459,47 @@ exports.GetProgramYear = async (req, res) => {
   WHERE course_year.branch_id = ? AND course_year.status = 'Active'`;
   const Auth = req.session.Auth;
   const connection = await connectDatabase(Auth);
-  connection.query(query, [branch_id], (error, rows) => {
-    if (error) {
-      logger.error("Error fetching course_year: ", error);
-      res
-        .status(500)
-        .json({ message: "Internal server error", status: "error" });
+  try {
+    connection.query(query, [branch_id], (error, rows) => {
+      if (error) {
+        logger.error("Error fetching course_year: ", error);
+        res
+          .status(500)
+          .json({ message: "Internal server error", status: "error" });
 
-      return;
-    }
-    res.status(200).json({ program_years: rows });
-  });
+        return;
+      }
+      res.status(200).json({ program_years: rows });
+    });
+  } catch (error) {
+    logger.error("Error fetching course_year: ", error);
+    res.status(500).json({ message: "Internal server error" });
+  } finally {
+    connection.end();
+  }
 };
 exports.GetDepartment = async (req, res) => {
   const { branch_id } = req.params;
   const query = `SELECT class_name FROM class where branch_id = ? AND status = 'Active'`;
   const Auth = req.session.Auth;
   const connection = await connectDatabase(Auth);
-  connection.query(query, [branch_id], (error, rows) => {
-    if (error) {
-      res
-        .status(500)
-        .json({ message: "Internal server error", status: "error" });
-      logger.error("Error fetching class_name: ", error);
-      return;
-    }
-    res.status(200).json({ departments: rows });
-  });
+  try {
+    connection.query(query, [branch_id], (error, rows) => {
+      if (error) {
+        res
+          .status(500)
+          .json({ message: "Internal server error", status: "error" });
+        logger.error("Error fetching class_name: ", error);
+        return;
+      }
+      res.status(200).json({ departments: rows });
+    });
+  } catch (error) {
+    logger.error("Error fetching class_name: ", error);
+    res.status(500).json({ message: "Internal server error" });
+  } finally {
+    connection.end();
+  }
 };
 
 exports.GetSubjectList = async (req, res) => {
@@ -478,17 +507,24 @@ exports.GetSubjectList = async (req, res) => {
   const query = `SELECT id, subject,subject_code FROM subjects where branch_id = ? AND status = 'Active'`;
   const Auth = req.session.Auth;
   const connection = await connectDatabase(Auth);
-  connection.query(query, [branch_id], (error, rows) => {
-    if (error) {
-      logger.error("Error fetching subject_name: ", error);
-      res
-        .status(500)
-        .json({ message: "Internal server error", status: "error" });
+  try {
+    connection.query(query, [branch_id], (error, rows) => {
+      if (error) {
+        logger.error("Error fetching subject_name: ", error);
+        res
+          .status(500)
+          .json({ message: "Internal server error", status: "error" });
 
-      return;
-    }
-    res.status(200).json({ subjects: rows });
-  });
+        return;
+      }
+      res.status(200).json({ subjects: rows });
+    });
+  } catch (error) {
+    logger.error("Error fetching subject_name: ", error);
+    res.status(500).json({ message: "Internal server error" });
+  } finally {
+    connection.end();
+  }
 };
 
 // exports.GetfinancialYear = async (req, res) => {
