@@ -4,6 +4,7 @@ const router = Express.Router();
 const BookController = require("../controller/book.controller");
 const userController = require("../controller/user.controller");
 const locationController = require("../controller/location.controller");
+const storeController = require("../controller/store.controller");
 
 router.get("/users/:userId/campus/:campus_name", userController.users);
 
@@ -31,5 +32,8 @@ router.get("/get-program-years/:branch_id", BookController.GetProgramYear);
 router.get("/get-vendors/:branch_id", BookController.GetVendor);
 router.get("/get-subjects/:branch_id", BookController.GetSubjectList);
 router.get("/get-languages", BookController.GetLanguages);
+
+router.post("/create-book-quantity", storeController.BookQuantity);
+router.get("/get-item-code", storeController.GetItemCode);
 
 module.exports = router;
