@@ -1,4 +1,4 @@
-const { tr } = require("date-fns/locale");
+// Initilize express router
 const connectDatabase = require("../config/dbConfig");
 const logger = require("../logger");
 
@@ -120,12 +120,10 @@ exports.UpdateLocation = async (req, res) => {
             .json({ message: "Internal server error", status: "error" });
           logger.error("Error updating location: ", error);
         }
-        res
-          .status(200)
-          .json({
-            message: "Location updated successfully",
-            status: "success",
-          });
+        res.status(200).json({
+          message: "Location updated successfully",
+          status: "success",
+        });
       }
     );
   } catch (error) {
