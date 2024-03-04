@@ -20,6 +20,7 @@ const corsOptions = {
     "http://localhost:3000",
     "http://localhost",
     "http://13.58.217.203:3003",
+    "http://13.58.217.203:3000",
   ],
   // origin: "*",
   credentials: true,
