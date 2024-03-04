@@ -78,7 +78,7 @@ exports.GetItemCode = async (req, res) => {
   const { book_id, branch_id } = req.params;
   const Auth = req.session.Auth;
   const connection = await connectDatabase(Auth);
-  const query = `SELECT * FROM book_quantity WHERE book_id = ? AND branch_id = ?`;
+  const query = `SELECT * FROM lms_quantity WHERE book_id = ? AND branch_id = ?`;
   try {
     connection.query(query, [book_id, branch_id], (err, result) => {
       if (err) {
