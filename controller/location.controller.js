@@ -3,7 +3,7 @@ const logger = require("../logger");
 
 exports.GetLocations = async (req, res) => {
   const { branch_id } = req.params;
-  const query = `SELECT * FROM block WHERE campus_id = ? AND block_status = 'active'`;
+  const query = `SELECT * FROM floor WHERE branch_id = ? AND status = 'active'`;
   const Auth = req.session.Auth;
   const connection = await connectDatabase(Auth);
   connection.query(query, [branch_id], (error, rows) => {

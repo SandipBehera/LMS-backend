@@ -25,4 +25,11 @@ router.post("/create-book", BookController.AddBook);
 router.get("/get-all-books/:branch_id", BookController.GetBooks);
 router.put("/update-book/:id", BookController.UpdateBooks);
 
+router.get("/get-departments/:branch_id", BookController.GetDepartment);
+router.get("/get-programs/:branch_id", BookController.GetPrograms);
+router.get("/get-program-years/:branch_id", BookController.GetProgramYear);
+router.get("/get-vendors/:branch_id", BookController.GetVendor);
+router.get("/get-subjects/:branch_id", BookController.GetSubjectList);
+router.get("/get-languages", BookController.GetLanguages);
+
 module.exports = router;
