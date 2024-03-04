@@ -59,12 +59,19 @@ exports.BookQuantity = async (req, res) => {
       [book_id, 0, item_quantity, JSON.stringify(bookDetails)]
     );
 
-    res.status(200).json({ message: "Book Quantity Inserted Successfully" });
+    res.status(200).json({
+      message: "Book Quantity Inserted Successfully",
+      status: "success",
+    });
   } catch (err) {
     logger.error(`Error in inserting book quantity: ${err.message}`);
     res
       .status(500)
-      .json({ message: "Internal Server Error", error: err.message });
+      .json({
+        message: "Internal Server Error",
+        error: err.message,
+        status: "error",
+      });
   } finally {
     connection.end();
   }
