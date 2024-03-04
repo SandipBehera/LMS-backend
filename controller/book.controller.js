@@ -1,5 +1,4 @@
 // Initilize express router
-const { tr } = require("date-fns/locale");
 const connectDatabase = require("../config/dbConfig");
 const logger = require("../logger");
 
