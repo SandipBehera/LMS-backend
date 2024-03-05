@@ -1,6 +1,9 @@
 // Initilize express router
 const connectDatabase = require("../config/dbConfig");
 const logger = require("../logger");
+const fs = require("fs");
+const fastCsv = require("fast-csv");
+const path = require("path");
 
 exports.CreateBookCategory = async (req, res) => {
   const { category_name, category_description, status, branch_id } = req.body;
@@ -120,35 +123,158 @@ exports.UpdateBookCategory = async (req, res) => {
     connection.end();
   }
 };
-
 exports.UploadBulkCategory = async (req, res) => {
-  const fileBuffer = req.file.buffer.toString(); // Assuming the file is CSV
+  const file = req.files.file; // "file" should match the name attribute in the FormData
+
+  const fileBuffer = file.data.toString(); // Assuming the file is CSV
   const rows = fileBuffer.split("\n").map((row) => row.split(","));
 
   const Auth = req.session.Auth;
   const connection = await connectDatabase(Auth);
-
+  const query =
+    "INSERT INTO lms_book_category (category_name, category_description, status, brach_id) VALUES (?, ?, ?, ?)";
   try {
-    const query =
-      "INSERT INTO lms_book_category (category_name, category_description, status, brach_id) VALUES (?, ?, ?, ?)";
-    const values = [];
-
     for (const row of rows) {
-      const [category_name, category_description, status, branch_id] = row;
-      values.push([category_name, category_description, status, branch_id]);
+      const cleanedRow = row.map((value) => value.replace(/\r/g, ""));
+      const [category_name, category_description, status, branch_id] =
+        cleanedRow;
+
+      // Wrap the SQL query in a promise for asynchronous execution
+      const insertRow = () => {
+        return new Promise((resolve, reject) => {
+          connection.query(
+            query,
+            [category_name, category_description, status, branch_id],
+            (error, result) => {
+              if (error) {
+                console.error("Error during insert:", error);
+                reject(error);
+              } else {
+                // Optionally, you can log or handle the result of the insert operation
+                console.log("Insert successful for row:", row);
+                resolve(result);
+              }
+            }
+          );
+        });
+      };
+
+      // Await the completion of each insert operation
+      await insertRow();
     }
 
-    await connection.query(query, values);
-
-    res.status(200).json({ message: "Bulk upload successful" });
+    // If all inserts are successful, send a success response
+    res.status(200).json({
+      message: "Data successfully inserted into the database",
+      staus: "success",
+    });
   } catch (error) {
     console.error("Error during bulk upload:", error);
     res.status(500).json({ message: "Internal server error" });
   } finally {
+    connection.end(); // Make sure to handle database connections appropriately
+  }
+};
+exports.UploadBulkLocation = async (req, res) => {
+  const file = req.files.file; // "file" should match the name attribute in the FormData
+
+  const fileBuffer = file.data.toString(); // Assuming the file is CSV
+  const rows = fileBuffer.split("\n").map((row) => row.split(","));
+
+  const Auth = req.session.Auth;
+  const connection = await connectDatabase(Auth);
+  const query =
+    "INSERT INTO lms_book_location (block, shelf_name, rack_name, sub_rack_name, status, branch_id) VALUES (?, ?, ?, ?, ?, ?)";
+  try {
+    for (const row of rows) {
+      const cleanedRow = row.map((value) => value.replace(/\r/g, ""));
+      const [block, shelf_name, rack_name, sub_rack_name, status, branch_id] =
+        cleanedRow;
+
+      // Wrap the SQL query in a promise for asynchronous execution
+      const insertRow = () => {
+        return new Promise((resolve, reject) => {
+          connection.query(
+            query,
+            [block, shelf_name, rack_name, sub_rack_name, status, branch_id],
+            (error, result) => {
+              if (error) {
+                console.error("Error during insert:", error);
+                reject(error);
+              } else {
+                // Optionally, you can log or handle the result of the insert operation
+                console.log("Insert successful for row:", row);
+                resolve(result);
+              }
+            }
+          );
+        });
+      };
+
+      // Await the completion of each insert operation
+      await insertRow();
+    }
+
+    // If all inserts are successful, send a success response
+    res.status(200).json({
+      message: "Data successfully inserted into the database",
+      staus: "success",
+    });
+  } catch (error) {
+    console.error("Error during bulk upload:", error);
+    res.status(500).json({ message: "Internal server error" });
+  } finally {
+    connection.end(); // Make sure to handle database connections appropriately
+  }
+};
+// Define the DownloadFile function
+exports.DownloadFile = async (req, res) => {
+  const { file_name, ext } = req.params;
+  const Auth = req.session.Auth;
+  const connection = await connectDatabase(Auth);
+  const query = `DESCRIBE lms_book_${file_name}`;
+  try {
+    connection.query(query, (err, result) => {
+      if (err) {
+        console.error("Error in getting fields:", err);
+        return res.status(500).json({ message: "Internal Server Error" });
+      }
+      console.log("first", result);
+      const columnNames = result.map((column) => column.Field);
+      console.log("columnNames", columnNames);
+      // Create a CSV file with column names
+      const filePath = path.join(
+        __dirname,
+        `../sample_file/${file_name}.${ext}`
+      );
+      const writeStream = fs.createWriteStream(filePath);
+
+      fastCsv
+        .write(columnNames, {
+          headers: columnNames,
+          delimiter: ",",
+          quote: "",
+        })
+        .pipe(writeStream)
+        .on("finish", () => {
+          // Send the generated CSV file for download
+          res.download(filePath, `${file_name}.${ext}`, () => {
+            // Cleanup: Delete the temporary file after sending
+            fs.unlinkSync(filePath);
+          });
+        })
+        .on("error", (err) => {
+          console.error("Error generating CSV:", err);
+          res.status(500).send("Error generating CSV");
+        });
+    });
+  } catch (error) {
+    console.error("Error in getting fields:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  } finally {
     connection.end();
   }
 };
-
 exports.AddBook = async (req, res) => {
   const {
     book_name,

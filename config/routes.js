@@ -1,5 +1,7 @@
 const Express = require("express");
 const router = Express.Router();
+const path = require("path");
+const fs = require("fs");
 
 const BookController = require("../controller/book.controller");
 const userController = require("../controller/user.controller");
@@ -35,5 +37,11 @@ router.get("/get-languages", BookController.GetLanguages);
 
 router.post("/create-book-quantity", storeController.BookQuantity);
 router.get("/get-item-code", storeController.GetItemCode);
+
+router.use("/static", Express.static(path.join(__dirname, "sample_file")));
+
+router.get("/download/:file_name/extension/:ext", BookController.DownloadFile);
+router.post("/upload-category", BookController.UploadBulkCategory);
+router.post("/upload-location", BookController.UploadBulkLocation);
 
 module.exports = router;
