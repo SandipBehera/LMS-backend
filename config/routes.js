@@ -43,5 +43,6 @@ router.use("/static", Express.static(path.join(__dirname, "sample_file")));
 router.get("/download/:file_name/extension/:ext", BookController.DownloadFile);
 router.post("/upload-category", BookController.UploadBulkCategory);
 router.post("/upload-location", BookController.UploadBulkLocation);
+router.get("/inactive-types/:id/:type/:status", BookController.MakeInactive);
 
 module.exports = router;

@@ -695,3 +695,22 @@ exports.GetLanguages = async (req, res) => {
     res.status(200).json({ languages: rows });
   });
 };
+
+exports.MakeInactive = async (req, res) => {
+  const { id, type, status } = req.params;
+  const query = `UPDATE lms_book_${type} SET status = ?  WHERE id = ?`;
+  const Auth = req.session.Auth;
+  const connection = await connectDatabase(Auth);
+  connection.query(query, [status, id], (error, rows) => {
+    if (error) {
+      console.log("first", error);
+      logger.error("Error making book inactive: ", error);
+      res.status(500).json({ message: "Internal server error" });
+
+      return;
+    }
+    res
+      .status(200)
+      .json({ message: `Sucessfully Inactive ${type}`, status: "success" });
+  });
+};

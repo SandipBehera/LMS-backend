@@ -33,12 +33,16 @@ exports.users = async (req, res) => {
           req.session.Auth = connection_config;
           const connect = await connectDatabase(connection_config);
           connect.query(
-            `SELECT * FROM hms_logged_in_user WHERE user_id = '${userId}' AND date ='${date}'`,
+            `SELECT hms_logged_in_user.*, application_users.first_name
+            FROM hms_logged_in_user
+            LEFT JOIN application_users ON hms_logged_in_user.user_id = application_users.person_id
+            WHERE hms_logged_in_user.user_id = '${userId}' AND hms_logged_in_user.date = '${date}'`,
             (err, result) => {
               if (err) {
                 logger.error(err);
               }
               if (result) {
+                logger.info("User List", result);
                 res.send({
                   data: result[0],
                   message: "User List",
@@ -55,7 +59,10 @@ exports.users = async (req, res) => {
   } else {
     const connect = await connectDatabase(Auth);
     connect.query(
-      `SELECT * FROM hms_logged_in_user WHERE user_id = '${userId}' AND date ='${date}'`,
+      `SELECT hms_logged_in_user.*, application_users.first_name
+      FROM hms_logged_in_user
+      LEFT JOIN application_users ON hms_logged_in_user.user_id = application_users.person_id
+      WHERE hms_logged_in_user.user_id = '${userId}' AND hms_logged_in_user.date = '${date}'`,
       (err, result) => {
         if (err) {
           logger.error(err);
