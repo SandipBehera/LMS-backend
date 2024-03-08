@@ -356,9 +356,7 @@ exports.AddBook = async (req, res) => {
         (error, rows) => {
           if (error) {
             logger.error("Error storing books: ", error);
-            res
-              .status(500)
-              .json({ message: "Internal server error", status: "error" });
+            res.status(500).json({ message: error, status: "error" });
 
             return;
           }
