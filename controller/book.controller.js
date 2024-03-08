@@ -299,12 +299,11 @@ exports.AddBook = async (req, res) => {
     book_page_no,
     book_place_publication,
     book_accession_register,
-    date_of_entry,
     financial_year,
     branch_id,
   } = req.body;
   const duplicateCheckQuery = `SELECT * FROM lms_books WHERE book_name = ? AND branch_id = ?`;
-  const query = `INSERT INTO lms_books (book_name,book_location,book_category,book_author,book_publisher,book_vendor,book_isbn_code,published_year,program,department,program_year,book_volume,pages,subject,language,book_edition,book_material_type,book_sub_material_type,book_class_no,book_year_of_publication,book_page_no,book_place_publication,book_accession_register,date_of_entry,financial_year,branch_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+  const query = `INSERT INTO lms_books (book_name,book_location,book_category,book_author,book_publisher,book_vendor,book_isbn_code,published_year,program,department,program_year,book_volume,pages,subject,language,book_edition,book_material_type,book_sub_material_type,book_class_no,book_year_of_publication,book_page_no,book_place_publication,book_accession_register,financial_year,branch_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
   const Auth = req.session.Auth;
   const connection = await connectDatabase(Auth);
   try {
@@ -352,7 +351,6 @@ exports.AddBook = async (req, res) => {
             book_page_no,
             book_place_publication,
             book_accession_register,
-            date_of_entry,
             financial_year,
             branch_id,
           ],
