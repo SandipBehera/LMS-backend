@@ -68,8 +68,8 @@ exports.GetAllBookCategories = async (req, res) => {
   try {
     connection.query(query, [branch_id], (error, rows) => {
       if (error) {
-        res.status(500).json({ message: "Internal server error" });
         logger.error("Error fetching book categories: ", error);
+        res.status(500).json({ message: "Internal server error" });
         return;
       }
       res.status(200).json({ categories: rows });
@@ -91,8 +91,8 @@ exports.GetBookCategory = async (req, res) => {
   try {
     connection.query(query, [id], (error, rows) => {
       if (error) {
-        res.status(500).json({ message: "Internal server error" });
         logger.error("Error fetching book categories: ", error);
+        res.status(500).json({ message: "Internal server error" });
       }
       res.status(200).json({ category: rows });
     });
@@ -239,7 +239,6 @@ exports.DownloadFile = async (req, res) => {
         console.error("Error in getting fields:", err);
         return res.status(500).json({ message: "Internal Server Error" });
       }
-      console.log("first", result);
       const columnNames = result.map((column) => column.Field);
       console.log("columnNames", columnNames);
       // Create a CSV file with column names
@@ -313,10 +312,11 @@ exports.AddBook = async (req, res) => {
     [book_name, branch_id],
     (error, rows) => {
       if (error) {
+        logger.error("Error fetching books: ", error);
         res
           .status(500)
           .json({ message: "Internal server error", status: "error" });
-        logger.error("Error fetching books: ", error);
+
         return;
       }
       if (rows.length > 0) {
@@ -357,10 +357,11 @@ exports.AddBook = async (req, res) => {
         ],
         (error, rows) => {
           if (error) {
+            logger.error("Error storing books: ", error);
             res
               .status(500)
               .json({ message: "Internal server error", status: "error" });
-            logger.error("Error storing books: ", error);
+
             return;
           }
           res
@@ -381,8 +382,9 @@ exports.GetBooks = async (req, res) => {
   try {
     connection.query(query, [branch_id], (error, rows) => {
       if (error) {
-        res.status(500).json({ message: "Internal server error" });
         logger.error("Error fetching book categories: ", error);
+        res.status(500).json({ message: "Internal server error" });
+
         return;
       }
       res.status(200).json({ books: rows });
@@ -463,10 +465,11 @@ exports.UpdateBooks = async (req, res) => {
       ],
       (error, rows) => {
         if (error) {
+          logger.error("Error fetching book categories: ", error);
           res
             .status(500)
             .json({ message: "Internal server error", status: "error" });
-          logger.error("Error fetching book categories: ", error);
+
           return;
         }
         res
@@ -490,8 +493,9 @@ exports.GetActiveBooks = async (req, res) => {
   try {
     connection.query(query, [branch_id], (error, rows) => {
       if (error) {
-        res.status(500).json({ message: "Internal server error" });
         logger.error("Error fetching book categories: ", error);
+        res.status(500).json({ message: "Internal server error" });
+
         return;
       }
       res.status(200).json({ books: rows });
@@ -513,8 +517,9 @@ exports.GetActiveLocation = async (req, res) => {
   try {
     connection.query(query, [branch_id], (error, rows) => {
       if (error) {
-        res.status(500).json({ message: "Internal server error" });
         logger.error("Error fetching book categories: ", error);
+        res.status(500).json({ message: "Internal server error" });
+
         return;
       }
       res.status(200).json({ books: rows });
@@ -561,10 +566,11 @@ exports.GetVendor = async (req, res) => {
   try {
     connection.query(query, [branch_id], (error, rows) => {
       if (error) {
+        logger.error("Error fetching vendor_name: ", error);
         res
           .status(500)
           .json({ message: "Internal server error", status: "error" });
-        logger.error("Error fetching vendor_name: ", error);
+
         return;
       }
       res.status(200).json({ vendors: rows });
@@ -611,10 +617,11 @@ exports.GetDepartment = async (req, res) => {
   try {
     connection.query(query, [branch_id], (error, rows) => {
       if (error) {
+        logger.error("Error fetching class_name: ", error);
         res
           .status(500)
           .json({ message: "Internal server error", status: "error" });
-        logger.error("Error fetching class_name: ", error);
+
         return;
       }
       res.status(200).json({ departments: rows });
