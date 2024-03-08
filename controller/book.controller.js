@@ -307,66 +307,73 @@ exports.AddBook = async (req, res) => {
   const query = `INSERT INTO lms_books (book_name,book_location,book_category,book_author,book_publisher,book_vendor,book_isbn_code,published_year,program,department,program_year,book_volume,pages,subject,language,book_edition,book_material_type,book_sub_material_type,book_class_no,book_year_of_publication,book_page_no,book_place_publication,book_accession_register,date_of_entry,financial_year,branch_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`;
   const Auth = req.session.Auth;
   const connection = await connectDatabase(Auth);
-  connection.query(
-    duplicateCheckQuery,
-    [book_name, branch_id],
-    (error, rows) => {
-      if (error) {
-        logger.error("Error fetching books: ", error);
-        res.status(500).json({ message: error, status: "error" });
+  try {
+    connection.query(
+      duplicateCheckQuery,
+      [book_name, branch_id],
+      (error, rows) => {
+        if (error) {
+          logger.error("Error fetching books: ", error);
+          res.status(500).json({ message: error, status: "error" });
 
-        return;
-      }
-      if (rows.length > 0) {
-        res
-          .status(200)
-          .json({ message: "Book already exists", status: "error" });
-        return;
-      }
-      connection.query(
-        query,
-        [
-          book_name,
-          book_location,
-          book_category,
-          book_author,
-          book_publisher,
-          book_vendor,
-          book_isbn_code,
-          published_year,
-          program,
-          department,
-          program_year,
-          book_volume,
-          pages,
-          subject,
-          language,
-          book_edition,
-          book_material_type,
-          book_sub_material_type,
-          book_class_no,
-          book_year_of_publication,
-          book_page_no,
-          book_place_publication,
-          book_accession_register,
-          date_of_entry,
-          financial_year,
-          branch_id,
-        ],
-        (error, rows) => {
-          if (error) {
-            logger.error("Error storing books: ", error);
-            res.status(500).json({ message: error, status: "error" });
-
-            return;
-          }
+          return;
+        }
+        if (rows.length > 0) {
           res
             .status(200)
-            .json({ message: "Book added successfully", status: "success" });
+            .json({ message: "Book already exists", status: "error" });
+          return;
         }
-      );
-    }
-  );
+        connection.query(
+          query,
+          [
+            book_name,
+            book_location,
+            book_category,
+            book_author,
+            book_publisher,
+            book_vendor,
+            book_isbn_code,
+            published_year,
+            program,
+            department,
+            program_year,
+            book_volume,
+            pages,
+            subject,
+            language,
+            book_edition,
+            book_material_type,
+            book_sub_material_type,
+            book_class_no,
+            book_year_of_publication,
+            book_page_no,
+            book_place_publication,
+            book_accession_register,
+            date_of_entry,
+            financial_year,
+            branch_id,
+          ],
+          (error, rows) => {
+            if (error) {
+              logger.error("Error storing books: ", error);
+              res.status(500).json({ message: error, status: "error" });
+
+              return;
+            }
+            res
+              .status(200)
+              .json({ message: "Book added successfully", status: "success" });
+          }
+        );
+      }
+    );
+  } catch (error) {
+    logger.error("Error fetching book categories: ", error);
+    res.status(500).json({ message: "Internal server error" });
+  } finally {
+    connection.end();
+  }
 };
 
 exports.GetBooks = async (req, res) => {
