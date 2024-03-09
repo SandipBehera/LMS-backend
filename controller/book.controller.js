@@ -377,6 +377,7 @@ exports.AddBook = async (req, res) => {
       .json({ message: "Book added successfully", status: "success" });
   } catch (error) {
     logger.error("Error in AddBook function: ", error);
+    console.log("Error in AddBook function: ", error);
     res.status(500).json({ message: "Internal server error" });
   } finally {
     connection.end();
